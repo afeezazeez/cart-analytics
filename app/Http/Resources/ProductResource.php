@@ -17,7 +17,7 @@ class ProductResource extends JsonResource
         return [
             'uuid' => $this->uuid,
             'name' => $this->name,
-            'price' => $this->price,
+            'price' => (float)$this->price,
         ];
     }
 }

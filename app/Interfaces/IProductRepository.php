@@ -2,11 +2,13 @@
 
 namespace App\Interfaces;
 
+use App\Models\Product;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
-use Illuminate\Database\Eloquent\Collection;
+
 
 interface IProductRepository
 {
+    public function getByUUid(string $uuid):Product;
     public function getAll():LengthAwarePaginator;
 
 }

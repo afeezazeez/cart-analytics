@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\Auth\AuthController;
+use App\Http\Controllers\Api\Shop\CartController;
 use App\Http\Controllers\Api\Shop\ProductController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -26,7 +27,13 @@ Route::prefix('v1')->group(function () {
 
 
     Route::middleware(['auth:api'])->group(function () {
+
         Route::get('products',ProductController::class);
+
+        Route::prefix('cart')->group(function () {
+            Route::post('items', [CartController::class,'store']);
+        });
+
     });
 
 });

@@ -29,6 +29,17 @@ class ProductRepository implements IProductRepository
 
 
     /**
+     * Fetch product by uuid
+     *
+     * @param string $uuid
+     * @return Product
+     */
+    public function getByUUid(string $uuid):Product
+    {
+        return $this->model->where('uuid',$uuid)->firstorfail();
+    }
+
+    /**
      * Fetch all products in the database
      *
      * @return LengthAwarePaginator
