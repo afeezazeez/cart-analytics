@@ -41,3 +41,26 @@ if (! function_exists('errorResponse')) {
     }
 }
 
+if (!function_exists('generateReference')) {
+    /**
+     * Generate reference for any entity
+     *
+     */
+    function generateReference($length = 6): string
+    {
+
+        $characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+        $reference = '';
+
+        $maxIndex = strlen($characters) - 1;
+        for ($i = 0; $i < $length; $i++) {
+            $randomIndex = mt_rand(0, $maxIndex);
+            $reference .= $characters[$randomIndex];
+        }
+
+        $reference .= substr(time(), 0, 3) . str_pad(mt_rand(0, 999), 3, '0', STR_PAD_LEFT);
+
+        return $reference;
+    }
+}
+

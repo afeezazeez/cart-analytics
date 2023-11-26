@@ -41,6 +41,22 @@ class CartRepository implements ICartRepository
             ->first();
     }
 
+    /**
+     * Update status of auth user cart
+     *
+     * @param Cart $cart
+     * @param $data
+     * @return void
+     */
+    public function update(Cart $cart, $data): void
+    {
+        $cart->update($data);
+    }
+
+
+
+
+
 
 
 }

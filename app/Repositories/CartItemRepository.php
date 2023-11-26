@@ -53,6 +53,19 @@ class CartItemRepository implements ICartItemRepository
     }
 
     /**
+     * Get auth user  active cart items
+     *
+     * @param Cart $cart
+     * @return array
+     */
+    public function getItems(Cart $cart): array
+    {
+        return $cart->items()
+            ->with('product')
+            ->get()->toArray();
+    }
+
+    /**
      * Increase quantity of an item (product in cart)
      *
      * @param CartItem $cartItem

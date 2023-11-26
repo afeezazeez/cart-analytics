@@ -20,9 +20,9 @@ class CartService
     private IProductRepository $productRepository;
 
     public function __construct(
-        ICartRepository $cartRepository,
+        ICartRepository     $cartRepository,
         ICartItemRepository $cartItemRepository,
-        IProductRepository $productRepository
+        IProductRepository  $productRepository
     )
     {
         $this->cartRepository = $cartRepository;
@@ -93,7 +93,7 @@ class CartService
 
         $userCart = $this->getCart();
 
-        $cartItem = $this->cartItemRepository->getItem($userCart,$product->id);
+        $cartItem = $this->cartItemRepository->getItem($userCart, $product->id);
 
         if (!$cartItem || $cartItem->trashed()) {
             throw new ClientErrorException("Item does not exist in cart");
@@ -128,6 +128,35 @@ class CartService
 
         }
         return $userCart;
+    }
+
+
+    /**
+     * get total amount for all items in  cart
+     *
+     * @param array $cartItems
+     * @return int|float
+     */
+    public function getCartTotalAmount(array $cartItems): float|int
+    {
+        return array_sum(array_map(function ($cartItem) {
+
+            if (isset($cartItem['product']) && is_array($cartItem['product'])) {
+
+                $product = $cartItem['product'];
+
+                $quantity = $cartItem['quantity'];
+
+                // Ensure that the product has a 'price' key
+                if (isset($product['price'])) {
+
+                    return $quantity * $product['price'];
+
+                }
+            }
+            return 0;
+        }, $cartItems));
+
     }
 
 

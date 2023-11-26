@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\Auth\AuthController;
 use App\Http\Controllers\Api\Shop\CartController;
+use App\Http\Controllers\Api\Shop\CheckoutController;
 use App\Http\Controllers\Api\Shop\ProductController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -33,6 +34,7 @@ Route::prefix('v1')->group(function () {
         Route::prefix('cart')->group(function () {
             Route::post('items', [CartController::class,'store']);
             Route::delete('items', [CartController::class,'destroy']);
+            Route::post('checkout', CheckoutController::class);
         });
 
     });
