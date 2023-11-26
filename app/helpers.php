@@ -10,13 +10,12 @@ if (! function_exists('successResponse')) {
      * Return a standard success json response
      *
      */
-    function successResponse(array $data = [], int $code = Response::HTTP_OK) : JsonResponse
+    function successResponse(string $message='',array $data = [], int $code = Response::HTTP_OK) : JsonResponse
     {
         return response()->json([
             'success' => true,
+            'message' => $message,
             'data'    => $data,
-            'error'   => null,
-            'errors'  => [],
             'extra'   => []
         ], $code);
     }

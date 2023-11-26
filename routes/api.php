@@ -4,7 +4,7 @@ use App\Http\Controllers\Api\Auth\AuthController;
 use App\Http\Controllers\Api\Shop\CartController;
 use App\Http\Controllers\Api\Shop\CheckoutController;
 use App\Http\Controllers\Api\Shop\ProductController;
-use Illuminate\Http\Request;
+use App\Http\Controllers\RemovedCartItemController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -29,14 +29,18 @@ Route::prefix('v1')->group(function () {
 
     Route::middleware(['auth:api'])->group(function () {
 
-        Route::get('products',ProductController::class);
+        Route::prefix('shop')->group(function () {
 
-        Route::prefix('cart')->group(function () {
-            Route::post('items', [CartController::class,'store']);
-            Route::delete('items', [CartController::class,'destroy']);
-            Route::post('checkout', CheckoutController::class);
+            Route::get('products',ProductController::class);
+
+            Route::prefix('carts')->group(function () {
+                Route::post('items', [CartController::class,'store']);
+                Route::delete('items', [CartController::class,'destroy']);
+                Route::post('checkout', CheckoutController::class);
+                Route::get('removed-items', RemovedCartItemController::class)->middleware('admin');
+            });
+
         });
-
     });
 
 });

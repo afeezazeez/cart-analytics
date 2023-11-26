@@ -29,7 +29,7 @@ class AuthController extends Controller
     {
         $data = $this->authService->login($request->validated());
 
-        return successResponse($data);
+        return successResponse("Login success",$data);
     }
 
     /**
@@ -38,6 +38,6 @@ class AuthController extends Controller
     public function delete(): JsonResponse
     {
         $this->authService->logout();
-        return successResponse();
+        return successResponse("Logout success");
     }
 }

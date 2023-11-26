@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\Shop;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\ProductResource;
 use App\Services\ProductService;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 
 class ProductController extends Controller
@@ -17,10 +18,9 @@ class ProductController extends Controller
     }
 
 
-    public function __invoke()
+    public function __invoke():LengthAwarePaginator
     {
         $products = $this->productService->getAll();
         return ProductResource::collection($products)->resource;
-
     }
 }

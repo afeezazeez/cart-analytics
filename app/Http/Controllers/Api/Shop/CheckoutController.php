@@ -28,7 +28,7 @@ class CheckoutController extends Controller
     {
 
         if ($this->checkoutService->checkout()) {
-            return successResponse();
+            return successResponse("Order successfully placed. Kindly wait while it is being processed");
         }
 
         throw new ClientErrorException('Checkout failed!.Try again');

@@ -8,6 +8,7 @@ use App\Interfaces\ICartItemRepository;
 use App\Interfaces\ICartRepository;
 use App\Interfaces\IProductRepository;
 use App\Models\Cart;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
@@ -40,6 +41,8 @@ class CartService
     public function addToCart(string $uuid): array
     {
 
+        DB::beginTransaction();
+
         try {
 
             $product = $this->productRepository->getByUUid($uuid);
@@ -68,6 +71,8 @@ class CartService
                 $cartItem = $this->cartItemRepository->create($data);
             }
 
+            DB::commit();
+
             return [
                 'quantity' => $cartItem->quantity,
                 'product' => ProductResource::make($cartItem->product)
@@ -89,6 +94,8 @@ class CartService
      */
     public function removeFromCart(string $uuid): bool
     {
+        DB::beginTransaction();
+
         $product = $this->productRepository->getByUUid($uuid);
 
         $userCart = $this->getCart();
@@ -101,7 +108,11 @@ class CartService
 
         try {
 
-            return $this->cartItemRepository->delete($cartItem);
+            $this->cartItemRepository->delete($cartItem);
+
+            DB::commit();
+
+            return true;
 
         } catch (\Exception $e) {
             DB::rollBack();
@@ -157,6 +168,15 @@ class CartService
             return 0;
         }, $cartItems));
 
+    }
+
+    /**
+     *  Fetch items removed from cart by users before checkout
+     *
+     */
+    public function getRemovedItems(): LengthAwarePaginator
+    {
+        return $this->cartItemRepository->getRemovedItems();
     }
 
 

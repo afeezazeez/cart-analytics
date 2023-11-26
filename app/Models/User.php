@@ -24,6 +24,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'role'
     ];
 
     /**
@@ -53,5 +54,14 @@ class User extends Authenticatable
     public function password(): Attribute
     {
         return Attribute::set(fn($value) => Hash::make($value));
+    }
+
+    /**
+     * Takes string password and Hashes it
+     *
+     */
+    public function isAdmin():bool
+    {
+       return (bool)$this->role;
     }
 }

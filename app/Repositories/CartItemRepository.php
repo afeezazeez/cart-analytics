@@ -5,6 +5,7 @@ namespace App\Repositories;
 use App\Interfaces\ICartItemRepository;
 use App\Models\Cart;
 use App\Models\CartItem;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Arr;
 
 class CartItemRepository implements ICartItemRepository
@@ -12,9 +13,20 @@ class CartItemRepository implements ICartItemRepository
 
     protected CartItem $model;
 
+    /**
+     * @var int|mixed
+     */
+    private mixed $limit;
+    /**
+     * @var int|mixed
+     */
+    private mixed $page;
+
     public function __construct(CartItem $model)
     {
         $this->model = $model;
+        $this->page  = request()->page ?? 1;
+        $this->limit = request()->limit ?? 20;
     }
 
     /**
@@ -88,6 +100,22 @@ class CartItemRepository implements ICartItemRepository
 
         $cartItem->update(['quantity'=>1]);
     }
+
+    /**
+     * Fetch items removed from cart by users before checkout
+     */
+    public function getRemovedItems(): LengthAwarePaginator
+    {
+       return $this->model->onlyTrashed()
+           ->whereHas('cart', function ($query) {
+                $query->where('status', 'checked_out');
+            })
+           ->with(['cart.user','product'])->
+           paginate($this->limit,['*'],'page',$this->page);
+    }
+
+
+
 
 
 }
