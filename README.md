@@ -72,3 +72,6 @@ You should be able to visit your app at your laravel app base url e.g http://loc
 # Decisions
 - Along with the products that were removed from basket before checkout returned by the api, I also returned the cart and user details too.
 - Products added to basket, removed but later added aren't returned.
+
+
+Api postman documentation - https://documenter.getpostman.com/view/9428869/2s9YeD9ZNG
