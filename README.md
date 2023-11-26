@@ -64,7 +64,7 @@ Install the dependencies and start the server
 $ composer install
 $ php artisan key:generate
 $ php artisan migrate --seed
-$ php artisan passport:client --personal
+$ php artisan passport:install
 $ php artisan serve
 ```
 You should be able to visit your app at your laravel app base url e.g http://localhost:8000 or http://technical-assignment-back-end-engineer-afeezazeez.test/ (Provided you use Laravel Valet).
