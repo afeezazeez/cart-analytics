@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api\Shop;
 
 
+use App\Http\Controllers\Controller;
 use App\Http\Resources\RemovedItemResource;
 use App\Services\CartService;
 

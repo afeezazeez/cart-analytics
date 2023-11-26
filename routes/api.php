@@ -4,7 +4,7 @@ use App\Http\Controllers\Api\Auth\AuthController;
 use App\Http\Controllers\Api\Shop\CartController;
 use App\Http\Controllers\Api\Shop\CheckoutController;
 use App\Http\Controllers\Api\Shop\ProductController;
-use App\Http\Controllers\RemovedCartItemController;
+use App\Http\Controllers\Api\Shop\RemovedCartItemController;
 use Illuminate\Support\Facades\Route;
 
 /*
