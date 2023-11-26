@@ -75,3 +75,16 @@ You should be able to visit your app at your laravel app base url e.g http://loc
 
 
 Api postman documentation - https://documenter.getpostman.com/view/9428869/2s9YeD9ZNG
+
+## Test credentials
+User
+```  
+Email:azeezafeez212@gmail.com
+Password:password
+```
+
+Admin
+```  
+Email:admin@madewithlove.com
+Password:admin
+```
