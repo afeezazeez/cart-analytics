@@ -10,4 +10,5 @@ interface ICartItemRepository
     public function create(array $data): CartItem;
     public function getItem(Cart $cart, $product_id): CartItem|null;
     public function increaseQty(CartItem $cartItem): void;
+    public function restoreItem(CartItem $cartItem): void;
 }

@@ -31,5 +31,20 @@ class CartController extends Controller
         return successResponse($product);
     }
 
+    /**
+     * Remove product from cart
+     *
+     * @param CartProductRequest $request
+     * @return JsonResponse
+     * @throws ClientErrorException
+     */
+    public function destroy(CartProductRequest $request): JsonResponse
+    {
+        if ($this->cartService->removeFromCart($request->uuid)) {
+            return successResponse();
+        }
+
+    }
+
 
 }

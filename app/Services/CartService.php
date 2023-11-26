@@ -48,21 +48,25 @@ class CartService
 
             $cartItem = $this->cartItemRepository->getItem($userCart, $product->id);
 
-            // If product is not in cart
-            if (!$cartItem) {
+            if ($cartItem) {
+
+                if ($cartItem->trashed()) {
+                    // Product was previously removed, restore and update quantity to 1
+                    $this->cartItemRepository->restoreItem($cartItem);
+                } else {
+                    // Product is already in the cart,  Increase product quantity
+                    $this->cartItemRepository->increaseQty($cartItem);
+                }
+
+            } else {
+                // Product is not in the cart, create a new cart item
                 $data = [
                     'cart_id' => $userCart->id,
                     'product_id' => $product->id,
                     'quantity' => 1
                 ];
                 $cartItem = $this->cartItemRepository->create($data);
-
-            } else{
-
-                // Increase product quantity in cart
-                $this->cartItemRepository->increaseQty($cartItem);
             }
-
 
             return [
                 'quantity' => $cartItem->quantity,
@@ -74,6 +78,38 @@ class CartService
             Log::error($e);
             throw new ClientErrorException('Unable to add product to cart. Try again');
         }
+    }
+
+    /**
+     * remove product from cart for auth user
+     *
+     * @param string $uuid
+     * @return bool
+     * @throws ClientErrorException
+     */
+    public function removeFromCart(string $uuid): bool
+    {
+        $product = $this->productRepository->getByUUid($uuid);
+
+        $userCart = $this->getCart();
+
+        $cartItem = $this->cartItemRepository->getItem($userCart,$product->id);
+
+        if (!$cartItem || $cartItem->trashed()) {
+            throw new ClientErrorException("Item does not exist in cart");
+        }
+
+        try {
+
+            return $this->cartItemRepository->delete($cartItem);
+
+        } catch (\Exception $e) {
+            DB::rollBack();
+            Log::error($e);
+            throw new ClientErrorException('Unable to remove product from cart. Try again');
+        }
+
+
     }
 
 

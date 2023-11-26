@@ -30,6 +30,17 @@ class CartItemRepository implements ICartItemRepository
     }
 
     /**
+     * Remove item from cart
+     *
+     * @param CartItem $cartItem
+     * @return bool
+     */
+    public function delete(CartItem $cartItem): bool
+    {
+        return $cartItem->delete();
+    }
+
+    /**
      * Get particular auth user cart item
      *
      * @param Cart $cart
@@ -38,7 +49,7 @@ class CartItemRepository implements ICartItemRepository
      */
     public function getItem(Cart $cart, $product_id): CartItem|null
     {
-        return $cart->items->where('product_id', $product_id)->first();
+        return $cart->items()->withTrashed()->where('product_id', $product_id)->first();
     }
 
     /**
@@ -50,6 +61,19 @@ class CartItemRepository implements ICartItemRepository
     public function increaseQty(CartItem $cartItem): void
     {
          $cartItem->increment('quantity');
+    }
+
+    /**
+     * Restore item removed from cart and later re-added
+     *
+     * @param CartItem $cartItem
+     * @return void
+     */
+    public function restoreItem(CartItem $cartItem): void
+    {
+        $cartItem->restore();
+
+        $cartItem->update(['quantity'=>1]);
     }
 
 

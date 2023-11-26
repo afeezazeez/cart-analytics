@@ -32,6 +32,7 @@ Route::prefix('v1')->group(function () {
 
         Route::prefix('cart')->group(function () {
             Route::post('items', [CartController::class,'store']);
+            Route::delete('items', [CartController::class,'destroy']);
         });
 
     });

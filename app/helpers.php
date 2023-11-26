@@ -13,7 +13,7 @@ if (! function_exists('successResponse')) {
     function successResponse(array $data = [], int $code = Response::HTTP_OK) : JsonResponse
     {
         return response()->json([
-            'success' => 1,
+            'success' => true,
             'data'    => $data,
             'error'   => null,
             'errors'  => [],
@@ -30,7 +30,7 @@ if (! function_exists('errorResponse')) {
     function errorResponse(string $error = null, array $data = [], MessageBag $errors = null, array $trace = [],  int $code = Response::HTTP_BAD_REQUEST) : JsonResponse
     {
         return response()->json([
-            'success' => 0,
+            'success' => false,
             'data'    => $data,
             'error'   => $error,
             'errors'  => $errors ?? [],
