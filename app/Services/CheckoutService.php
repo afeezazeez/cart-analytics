@@ -59,7 +59,7 @@ class CheckoutService
             $data = [
                 'cart_id' => $userCart->id,
                 'total_amount' => $grandTotal,
-                'user_id', auth()->id()
+                'user_id' => auth()->id()
             ];
 
             if ($this->orderRepository->create($data)) {

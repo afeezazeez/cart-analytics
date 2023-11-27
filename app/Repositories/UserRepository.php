@@ -3,12 +3,11 @@
 namespace App\Repositories;
 
 use App\Interfaces\IUserRepository;
-use App\Models\Product;
 use App\Models\User;
 
 class UserRepository extends BaseRepository implements IUserRepository
 {
-    public function __construct(Product $model)
+    public function __construct(User $model)
     {
         parent::__construct($model);
     }

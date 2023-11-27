@@ -2,6 +2,8 @@
 
 namespace App\Repositories;
 
+use Illuminate\Support\Str;
+
 abstract class BaseRepository
 {
     protected $model;
@@ -16,6 +18,7 @@ abstract class BaseRepository
      */
     public function create(array $data)
     {
+        $data['uuid'] = Str::uuid()->toString();
         return $this->model->create($data);
     }
 

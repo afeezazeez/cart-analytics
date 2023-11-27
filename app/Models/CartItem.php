@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -11,7 +12,7 @@ class CartItem extends Model
 {
     use HasFactory, SoftDeletes;
 
-    protected $fillable = ['cart_id', 'product_id', 'quantity'];
+    protected $fillable = ['cart_id', 'product_id', 'quantity','uuid'];
 
     /**
      * Get product associated with cart item
@@ -28,6 +29,8 @@ class CartItem extends Model
     {
         return $this->belongsTo(Cart::class);
     }
+
+
 
 
 }
