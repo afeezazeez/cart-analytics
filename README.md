@@ -18,8 +18,11 @@ You have one week to accomplish the assignment. You decide yourself how much tim
 ## Shop API
 
 ## Description
-This project was built with Laravel and MYSQL. In this project, an api that helps sales team(admin) know which items were added to a basket, but removed before checkout
-was created. Below are other set of endpoints that were created to achieve the desired result
+This project was built with Laravel and MYSQL. In this project, A user can log in and add products to cart,remove (if they wish) and also checkout.
+A user sample test credentials is given below.
+An admin can also login and view all list of products that were added to cart but removed before checkout.
+A sample admin test credentials is also given below.
+Below are all the of endpoints that were created to achieve the desired result
 
 - An api for users (admin and regular users) to login
 - An api for users (admin and regular users) to logout
@@ -27,6 +30,7 @@ was created. Below are other set of endpoints that were created to achieve the d
 - An api for users to add an item to basket
 - An api for users to remove an item from basket
 - An api for users to checkout after adding items to basket
+- An aoi for an admin to view all list of products that were added to cart but removed before checkout
 
 ## Running the App
 To run the App, you must have:
