@@ -28,7 +28,7 @@ class CartController extends Controller
     public function store(CartProductRequest $request): JsonResponse
     {
         $product = $this->cartService->addToCart($request->uuid);
-        return successResponse("Product added to cart",$product);
+        return successResponse("Product added to cart", $product);
     }
 
     /**

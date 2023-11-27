@@ -18,7 +18,7 @@ class ProductController extends Controller
     }
 
 
-    public function __invoke():LengthAwarePaginator
+    public function __invoke(): LengthAwarePaginator
     {
         $products = $this->productService->getAll();
         return ProductResource::collection($products)->resource;

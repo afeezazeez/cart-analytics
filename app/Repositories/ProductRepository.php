@@ -22,7 +22,7 @@ class ProductRepository extends BaseRepository implements IProductRepository
     public function __construct(Product $model)
     {
         parent::__construct($model);
-        $this->page  = request()->page ?? 1;
+        $this->page = request()->page ?? 1;
         $this->limit = request()->limit ?? config('app.default_pagination_size');
     }
 
@@ -32,9 +32,9 @@ class ProductRepository extends BaseRepository implements IProductRepository
      *
      * @return LengthAwarePaginator
      */
-    public function getAll():LengthAwarePaginator
+    public function getAll(): LengthAwarePaginator
     {
-        return $this->model->paginate($this->limit,['*'],'page',$this->page);
+        return $this->model->paginate($this->limit, ['*'], 'page', $this->page);
     }
 
 }

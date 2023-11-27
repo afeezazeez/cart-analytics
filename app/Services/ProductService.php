@@ -21,7 +21,7 @@ class ProductService
      *
      * @return LengthAwarePaginator
      */
-    public function getAll():LengthAwarePaginator
+    public function getAll(): LengthAwarePaginator
     {
         return $this->productRepository->getAll();
     }

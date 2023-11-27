@@ -22,7 +22,7 @@ class RemovedCartItemController extends Controller
      */
     public function __invoke()
     {
-        $products =  $this->cartService->getRemovedItems();
+        $products = $this->cartService->getRemovedItems();
         return RemovedItemResource::collection($products);
     }
 }

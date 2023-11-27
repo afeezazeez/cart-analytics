@@ -48,5 +48,4 @@ class Cart extends Model
     }
 
 
-
 }

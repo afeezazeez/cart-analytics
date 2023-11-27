@@ -29,7 +29,7 @@ class AuthController extends Controller
     {
         $data = $this->authService->login($request->validated());
 
-        return successResponse("Login success",$data);
+        return successResponse("Login success", $data);
     }
 
     /**

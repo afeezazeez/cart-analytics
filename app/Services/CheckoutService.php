@@ -27,10 +27,10 @@ class CheckoutService
 
     )
     {
-        $this->orderRepository     = $orderRepository;
-        $this->cartRepository      = $cartRepository;
+        $this->orderRepository = $orderRepository;
+        $this->cartRepository = $cartRepository;
         $this->cartItemRepository = $cartItemRepository;
-        $this->cartService         = $cartService;
+        $this->cartService = $cartService;
     }
 
     /**
@@ -46,8 +46,8 @@ class CheckoutService
 
         $cartItems = $this->cartItemRepository->getItems($userCart);
 
-        if (empty($cartItems)){
-           throw new ClientErrorException('Please add a product to cart before checkout');
+        if (empty($cartItems)) {
+            throw new ClientErrorException('Please add a product to cart before checkout');
         }
 
         $grandTotal = $this->cartService->getCartTotalAmount($cartItems);
@@ -63,7 +63,7 @@ class CheckoutService
             ];
 
             if ($this->orderRepository->create($data)) {
-                $this->cartRepository->update(['status' => Cart::STATUS_CHECKED_OUT],$userCart->uuid);
+                $this->cartRepository->update(['status' => Cart::STATUS_CHECKED_OUT], $userCart->uuid);
             }
 
             DB::commit();

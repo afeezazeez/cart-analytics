@@ -12,6 +12,7 @@ class UserRepository extends BaseRepository implements IUserRepository
     {
         parent::__construct($model);
     }
+
     /**
      * Find user by email
      *

@@ -22,7 +22,7 @@ class CartItemRepository extends BaseRepository implements ICartItemRepository
     public function __construct(CartItem $model)
     {
         parent::__construct($model);
-        $this->page  = request()->page ?? 1;
+        $this->page = request()->page ?? 1;
         $this->limit = request()->limit ?? config('app.default_pagination_size');
     }
 
@@ -59,7 +59,7 @@ class CartItemRepository extends BaseRepository implements ICartItemRepository
      */
     public function increaseQty(CartItem $cartItem): void
     {
-         $cartItem->increment('quantity');
+        $cartItem->increment('quantity');
     }
 
     /**
@@ -72,7 +72,7 @@ class CartItemRepository extends BaseRepository implements ICartItemRepository
     {
         $cartItem->restore();
 
-        $cartItem->update(['quantity'=>1]);
+        $cartItem->update(['quantity' => 1]);
     }
 
 
@@ -81,12 +81,12 @@ class CartItemRepository extends BaseRepository implements ICartItemRepository
      */
     public function getRemovedItems(): LengthAwarePaginator
     {
-       return $this->model->onlyTrashed()
-           ->whereHas('cart', function ($query) {
+        return $this->model->onlyTrashed()
+            ->whereHas('cart', function ($query) {
                 $query->where('status', 'checked_out');
             })
-           ->with(['cart.user','product'])->
-           paginate($this->limit,['*'],'page',$this->page);
+            ->with(['cart.user', 'product'])->
+            paginate($this->limit, ['*'], 'page', $this->page);
     }
 
 }

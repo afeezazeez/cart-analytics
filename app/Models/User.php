@@ -60,8 +60,8 @@ class User extends Authenticatable
      * Takes string password and Hashes it
      *
      */
-    public function isAdmin():bool
+    public function isAdmin(): bool
     {
-       return (bool)$this->role;
+        return (bool)$this->role;
     }
 }
