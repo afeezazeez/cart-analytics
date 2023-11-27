@@ -66,7 +66,8 @@ class CartService
                 $data = [
                     'cart_id' => $userCart->id,
                     'product_id' => $product->id,
-                    'quantity' => 1
+                    'quantity' => 1,
+                    'user_id', auth()->id()
                 ];
                 $cartItem = $this->cartItemRepository->create($data);
             }
@@ -108,7 +109,7 @@ class CartService
 
         try {
 
-            $this->cartItemRepository->delete($cartItem);
+            $this->cartItemRepository->delete($cartItem->uuid);
 
             DB::commit();
 
@@ -135,7 +136,7 @@ class CartService
 
         if (!$userCart) {
 
-            $userCart = $this->cartRepository->create();
+            $userCart = $this->cartRepository->create(['user_id' => auth()->id()]);
 
         }
         return $userCart;

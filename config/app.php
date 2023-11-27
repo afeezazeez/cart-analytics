@@ -17,6 +17,7 @@ return [
     */
 
     'name' => env('APP_NAME', 'Laravel'),
+    'default_pagination_size'   => env('DEFAULT_PAGINATION_SIZE', 20),
 
     /*
     |--------------------------------------------------------------------------

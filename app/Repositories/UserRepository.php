@@ -3,19 +3,15 @@
 namespace App\Repositories;
 
 use App\Interfaces\IUserRepository;
+use App\Models\Product;
 use App\Models\User;
 
-class UserRepository implements IUserRepository
+class UserRepository extends BaseRepository implements IUserRepository
 {
-
-    protected User $model;
-
-    public function __construct(User $model)
+    public function __construct(Product $model)
     {
-        $this->model = $model;
+        parent::__construct($model);
     }
-
-
     /**
      * Find user by email
      *

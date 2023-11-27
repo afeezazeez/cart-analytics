@@ -8,24 +8,12 @@ use App\Models\CartItem;
 use Illuminate\Database\Eloquent\Collection;
 
 
-class CartRepository implements ICartRepository
+class CartRepository extends BaseRepository implements ICartRepository
 {
-
-    protected Cart $model;
 
     public function __construct(Cart $model)
     {
-        $this->model = $model;
-    }
-
-    /**
-     * Create new auth user cart
-     *
-     * @return Cart
-     */
-    public function create(): Cart
-    {
-        return $this->model->create(['user_id' => auth()->id()]);
+        parent::__construct($model);
     }
 
 
@@ -40,23 +28,5 @@ class CartRepository implements ICartRepository
             ->where('status', Cart::STATUS_ACTIVE)
             ->first();
     }
-
-    /**
-     * Update status of auth user cart
-     *
-     * @param Cart $cart
-     * @param $data
-     * @return void
-     */
-    public function update(Cart $cart, $data): void
-    {
-        $cart->update($data);
-    }
-
-
-
-
-
-
 
 }

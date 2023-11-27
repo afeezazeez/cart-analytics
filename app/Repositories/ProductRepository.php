@@ -8,9 +8,8 @@ use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 
-class ProductRepository implements IProductRepository
+class ProductRepository extends BaseRepository implements IProductRepository
 {
-    protected Product $model;
     /**
      * @var int|mixed
      */
@@ -22,22 +21,11 @@ class ProductRepository implements IProductRepository
 
     public function __construct(Product $model)
     {
-        $this->model = $model;
+        parent::__construct($model);
         $this->page  = request()->page ?? 1;
-        $this->limit = request()->limit ?? 20;
+        $this->limit = request()->limit ?? config('app.default_pagination_size');
     }
 
-
-    /**
-     * Fetch product by uuid
-     *
-     * @param string $uuid
-     * @return Product
-     */
-    public function getByUUid(string $uuid):Product
-    {
-        return $this->model->where('uuid',$uuid)->firstorfail();
-    }
 
     /**
      * Fetch all products in the database

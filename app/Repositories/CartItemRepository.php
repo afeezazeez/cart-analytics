@@ -6,13 +6,10 @@ use App\Interfaces\ICartItemRepository;
 use App\Models\Cart;
 use App\Models\CartItem;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
-use Illuminate\Support\Arr;
 
-class CartItemRepository implements ICartItemRepository
+
+class CartItemRepository extends BaseRepository implements ICartItemRepository
 {
-
-    protected CartItem $model;
-
     /**
      * @var int|mixed
      */
@@ -24,32 +21,9 @@ class CartItemRepository implements ICartItemRepository
 
     public function __construct(CartItem $model)
     {
-        $this->model = $model;
+        parent::__construct($model);
         $this->page  = request()->page ?? 1;
-        $this->limit = request()->limit ?? 20;
-    }
-
-    /**
-     * Create new auth user cart item
-     *
-     * @param $data
-     * @return CartItem
-     */
-    public function create($data): CartItem
-    {
-        $data = Arr::add($data, 'user_id', auth()->id());
-        return $this->model->create($data);
-    }
-
-    /**
-     * Remove item from cart
-     *
-     * @param CartItem $cartItem
-     * @return bool
-     */
-    public function delete(CartItem $cartItem): bool
-    {
-        return $cartItem->delete();
+        $this->limit = request()->limit ?? config('app.default_pagination_size');
     }
 
     /**
@@ -101,6 +75,7 @@ class CartItemRepository implements ICartItemRepository
         $cartItem->update(['quantity'=>1]);
     }
 
+
     /**
      * Fetch items removed from cart by users before checkout
      */
@@ -113,9 +88,5 @@ class CartItemRepository implements ICartItemRepository
            ->with(['cart.user','product'])->
            paginate($this->limit,['*'],'page',$this->page);
     }
-
-
-
-
 
 }

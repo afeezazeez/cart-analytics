@@ -59,10 +59,11 @@ class CheckoutService
             $data = [
                 'cart_id' => $userCart->id,
                 'total_amount' => $grandTotal,
+                'user_id', auth()->id()
             ];
 
             if ($this->orderRepository->create($data)) {
-                $this->cartRepository->update($userCart, ['status' => Cart::STATUS_CHECKED_OUT]);
+                $this->cartRepository->update(['status' => Cart::STATUS_CHECKED_OUT],$userCart->uuid);
             }
 
             DB::commit();
