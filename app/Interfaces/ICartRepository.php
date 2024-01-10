@@ -7,5 +7,5 @@ use App\Models\Cart;
 
 interface ICartRepository
 {
-    public function get(): Cart|null;
+    public function get(int $user_id): Cart|null;
 }

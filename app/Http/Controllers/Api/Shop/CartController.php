@@ -27,7 +27,7 @@ class CartController extends Controller
      */
     public function store(CartProductRequest $request): JsonResponse
     {
-        $product = $this->cartService->addToCart($request->uuid);
+        $product = $this->cartService->addToCart(auth()->id(), $request->uuid);
         return successResponse("Product added to cart", $product);
     }
 
@@ -40,7 +40,7 @@ class CartController extends Controller
      */
     public function destroy(CartProductRequest $request): JsonResponse
     {
-        if ($this->cartService->removeFromCart($request->uuid)) {
+        if ($this->cartService->removeFromCart(auth()->id(), $request->uuid)) {
             return successResponse("Product removed from cart");
         }
 

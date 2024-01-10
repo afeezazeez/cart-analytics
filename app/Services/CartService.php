@@ -34,11 +34,12 @@ class CartService
     /**
      * Add product to cart for auth user
      *
+     * @param $user_id
      * @param string $uuid
      * @return array
      * @throws ClientErrorException
      */
-    public function addToCart(string $uuid): array
+    public function addToCart($user_id,string $uuid): array
     {
 
         DB::beginTransaction();
@@ -47,7 +48,7 @@ class CartService
 
             $product = $this->productRepository->getByUUid($uuid);
 
-            $userCart = $this->getCart();
+            $userCart = $this->getCart($user_id);
 
             $cartItem = $this->cartItemRepository->getItem($userCart, $product->id);
 
@@ -55,10 +56,14 @@ class CartService
 
                 if ($cartItem->trashed()) {
                     // Product was previously removed, restore and update quantity to 1
-                    $this->cartItemRepository->restoreItem($cartItem);
+                    $data = [
+                        'deleted_at' => null,
+                        'quantity' => 1
+                    ];
+                    $this->cartItemRepository->update($data,$cartItem->ulid);
                 } else {
-                    // Product is already in the cart,  Increase product quantity
-                    $this->cartItemRepository->increaseQty($cartItem);
+
+                    $this->cartItemRepository->update(['quantity' => $cartItem->quantity+1],$cartItem->ulid);
                 }
 
             } else {
@@ -89,17 +94,18 @@ class CartService
     /**
      * remove product from cart for auth user
      *
+     * @param $user_id
      * @param string $uuid
      * @return bool
      * @throws ClientErrorException
      */
-    public function removeFromCart(string $uuid): bool
+    public function removeFromCart($user_id, string $uuid): bool
     {
         DB::beginTransaction();
 
         $product = $this->productRepository->getByUUid($uuid);
 
-        $userCart = $this->getCart();
+        $userCart = $this->getCart($user_id);
 
         $cartItem = $this->cartItemRepository->getItem($userCart, $product->id);
 
@@ -128,15 +134,16 @@ class CartService
     /**
      * get auth user cart or create new cart for user
      *
+     * @param int $user_id
      * @return Cart
      */
-    public function getCart(): Cart
+    public function getCart(int $user_id): Cart
     {
-        $userCart = $this->cartRepository->get();
+        $userCart = $this->cartRepository->get($user_id);
 
         if (!$userCart) {
 
-            $userCart = $this->cartRepository->create(['user_id' => auth()->id()]);
+            $userCart = $this->cartRepository->create(['user_id' => $user_id]);
 
         }
         return $userCart;
@@ -175,9 +182,9 @@ class CartService
      *  Fetch items removed from cart by users before checkout
      *
      */
-    public function getRemovedItems(): LengthAwarePaginator
+    public function getRemovedItems(array $meta): LengthAwarePaginator
     {
-        return $this->cartItemRepository->getRemovedItems();
+        return $this->cartItemRepository->getRemovedItems($meta);
     }
 
 

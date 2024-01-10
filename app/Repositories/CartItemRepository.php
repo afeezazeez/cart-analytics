@@ -10,20 +10,11 @@ use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 
 class CartItemRepository extends BaseRepository implements ICartItemRepository
 {
-    /**
-     * @var int|mixed
-     */
-    private mixed $limit;
-    /**
-     * @var int|mixed
-     */
-    private mixed $page;
 
     public function __construct(CartItem $model)
     {
         parent::__construct($model);
-        $this->page = request()->page ?? 1;
-        $this->limit = request()->limit ?? config('app.default_pagination_size');
+
     }
 
     /**
@@ -51,42 +42,19 @@ class CartItemRepository extends BaseRepository implements ICartItemRepository
             ->get()->toArray();
     }
 
-    /**
-     * Increase quantity of an item (product in cart)
-     *
-     * @param CartItem $cartItem
-     * @return void
-     */
-    public function increaseQty(CartItem $cartItem): void
-    {
-        $cartItem->increment('quantity');
-    }
-
-    /**
-     * Restore item removed from cart and later re-added
-     *
-     * @param CartItem $cartItem
-     * @return void
-     */
-    public function restoreItem(CartItem $cartItem): void
-    {
-        $cartItem->restore();
-
-        $cartItem->update(['quantity' => 1]);
-    }
 
 
     /**
      * Fetch items removed from cart by users before checkout
      */
-    public function getRemovedItems(): LengthAwarePaginator
+    public function getRemovedItems(array $meta): LengthAwarePaginator
     {
         return $this->model->onlyTrashed()
             ->whereHas('cart', function ($query) {
                 $query->where('status', 'checked_out');
             })
             ->with(['cart.user', 'product'])->
-            paginate($this->limit, ['*'], 'page', $this->page);
+            paginate($meta['limit'], ['*'], 'page',$meta['page']);
     }
 
 }

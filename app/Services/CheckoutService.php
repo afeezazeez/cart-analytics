@@ -39,10 +39,10 @@ class CheckoutService
      * @return bool
      * @throws ClientErrorException
      */
-    public function checkout(): bool
+    public function checkout($user_id): bool
     {
 
-        $userCart = $this->cartService->getCart();
+        $userCart = $this->cartService->getCart($user_id);
 
         $cartItems = $this->cartItemRepository->getItems($userCart);
 

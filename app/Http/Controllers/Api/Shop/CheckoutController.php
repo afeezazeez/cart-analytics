@@ -27,7 +27,7 @@ class CheckoutController extends Controller
     public function __invoke(): JsonResponse
     {
 
-        if ($this->checkoutService->checkout()) {
+        if ($this->checkoutService->checkout(auth()->id())) {
             return successResponse("Order successfully placed. Kindly wait while it is being processed");
         }
 

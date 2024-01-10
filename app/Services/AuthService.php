@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Exceptions\ClientErrorException;
 use App\Interfaces\IUserRepository;
+use App\Models\User;
 
 class AuthService
 {
@@ -53,9 +54,9 @@ class AuthService
      *
      * @return void
      */
-    public function logout(): void
+    public function logout($user): void
     {
-        auth()->user()->token()->revoke();
+        $user->token()->revoke();
     }
 
 

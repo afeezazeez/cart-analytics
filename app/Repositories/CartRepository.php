@@ -22,9 +22,9 @@ class CartRepository extends BaseRepository implements ICartRepository
      *
      * @return Cart|null
      */
-    public function get(): Cart|null
+    public function get($user_id): Cart|null
     {
-        return $this->model->where('user_id', auth()->id())
+        return $this->model->where('user_id', $user_id)
             ->where('status', Cart::STATUS_ACTIVE)
             ->first();
     }

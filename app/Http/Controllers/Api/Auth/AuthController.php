@@ -37,7 +37,7 @@ class AuthController extends Controller
      */
     public function delete(): JsonResponse
     {
-        $this->authService->logout();
+        $this->authService->logout(auth()->user());
         return successResponse("Logout success");
     }
 }
