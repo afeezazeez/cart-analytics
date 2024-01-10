@@ -37,4 +37,4 @@ $ php artisan migrate --seed
 $ php artisan passport:install
 $ php artisan serve
 ```
-You should be able to visit your app at your laravel app base url e.g http://localhost:8000 or http://technical-assignment-back-end-engineer-afeezazeez.test/ (Provided you use Laravel Valet).
+You should be able to visit your app at your laravel app base url e.g http://localhost:8000 or http://cart-analytics.test/ (Provided you use Laravel Valet).
