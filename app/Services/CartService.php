@@ -56,11 +56,8 @@ class CartService
 
                 if ($cartItem->trashed()) {
                     // Product was previously removed, restore and update quantity to 1
-                    $data = [
-                        'deleted_at' => null,
-                        'quantity' => 1
-                    ];
-                    $this->cartItemRepository->update($data,$cartItem->ulid);
+                    $this->cartItemRepository->restore($cartItem);
+                    $this->cartItemRepository->update(['quantity' => 1],$cartItem->ulid);
                 } else {
 
                     $this->cartItemRepository->update(['quantity' => $cartItem->quantity+1],$cartItem->ulid);

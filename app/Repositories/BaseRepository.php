@@ -47,5 +47,13 @@ abstract class BaseRepository
         $this->model->where('uuid', $uuid)->delete();
     }
 
+    /**
+     * Restore a record
+     */
+    public function restore($model): void
+    {
+        $model->restore();
+    }
+
 
 }
