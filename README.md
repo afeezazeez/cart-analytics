@@ -1,11 +1,3 @@
-# Technical assignment back-end engineer
-
-As part of an engineering team, you are working on an online shopping platform. The sales team wants to know which items were added to a basket, but removed before checkout. They will use this data later for targeted discounts.
-
-Using the agreed upon programming language, build a solution that solves the above problem.
-
-# Solution
-
 ## Shop API
 
 ## Description
@@ -64,11 +56,6 @@ $ php artisan serve
 ```
 You should be able to visit your app at your laravel app base url e.g http://localhost:8000 or http://cart-analytics.test/ (Provided you use Laravel Valet).
 
-# Decisions
-- Along with the products that were removed from basket before checkout returned by the api, I also returned the cart and user details too.
-- Products added to basket, removed but later added aren't returned.
-
-
 Api postman documentation - https://documenter.getpostman.com/view/9428869/2s9YeD9ZNG
 
 ## Test credentials
@@ -77,10 +64,3 @@ User
 Email:azeezafeez212@gmail.com
 Password:password
 ```
-
-Admin
-```  
-Email:admin@madewithlove.com
-Password:admin
-```
-
